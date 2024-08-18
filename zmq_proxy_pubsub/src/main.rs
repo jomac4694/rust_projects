@@ -1,11 +1,9 @@
 use zmq::*;
 use std::env::args;
-// Lets try to make a simple ZMQ "framework" in rust...
-// We will have a ZmqService(?) that we implement
-// A ZMQ service will be able to send requests
-// A ZMQ service will be able to receive (and respond) requests
-// A ZMQ service will be able to subscribe to events
-// A ZMQ service will be able to publish events
+use protobuf::{EnumOrUnknown, Message};
+include!(concat!(env!("OUT_DIR"), "/protos/mod.rs"));
+use example::GetRequest;
+
 type Event = String;
 
 pub trait IZmqService

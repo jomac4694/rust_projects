@@ -1,10 +1,9 @@
 [package]
-name = "zmq-proxy-pubsub"
+name = "zmq_service"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-aes-gcm-siv = "0.10.3"
 getopts = "0.2"
 protobuf = "3"
 zmq = "0.10.0"

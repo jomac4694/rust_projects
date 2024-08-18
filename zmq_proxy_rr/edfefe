@@ -1,0 +1,15 @@
+struct Service
+{
+    pub subbies: Vec<String>,
+
+    fn RegisterCallback<T: MessageFull>(callback: impl FnOnce(Box<T>));
+}
+
+impl Service
+{
+    pub fn new() -> Self {
+        Self {
+            subbies: Vec::new(),
+        }
+    }
+}

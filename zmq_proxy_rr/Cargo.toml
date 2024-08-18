@@ -1,5 +1,5 @@
 [package]
-name = "zmq-proxy-pubsub"
+name = "hello-rust"
 version = "0.1.0"
 edition = "2021"
 
