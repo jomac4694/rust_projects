@@ -1,10 +1,15 @@
 use zmq::*;
 use std::time::Duration;
 use std::thread;
+use protobuf::{EnumOrUnknown, Message, MessageFull};
+include!(concat!(env!("OUT_DIR"), "/protos/mod.rs"));
+use example::{GetRequest, GetResponse};
 
-fn make_publisher(topic: &String, msg: &String)
+fn make_publisher<T: MessageFull>(msg: &String)
 {
     //prepare context and publisher
+    let desc = T::descriptor();
+    let topic = desc.name();
     let context = zmq::Context::new();
     let publisher = context.socket(zmq::PUB).unwrap();
     publisher
@@ -18,7 +23,7 @@ fn make_publisher(topic: &String, msg: &String)
         publisher
             .send(msg.as_bytes(), 0)
             .expect("failed sending first message");
-        thread::sleep(Duration::from_millis(1000));
+        thread::sleep(Duration::from_millis(500));
     }
 }
 
@@ -56,18 +61,13 @@ fn make_req(topic: &String)
 }
 
 fn main() {
-  //  make_publisher();
     println!("Hello, world!");
-    let v = vec!["A", "B", "C"]; //"C", "D", "E", "F", "G", "H"];
-  //  make_publisher(&"A".to_string());
-   // let a = "A";
-   // let b = "B";
-  //  single_publish(&a.to_string(), &b.to_string());
-    for val in v.iter()
-    {
-        let yo = val.clone();
-        thread::spawn(move || {make_publisher(&yo.to_string(), &"yeerrr".to_string());});
-    }
+   // let v = vec!["GetResponse", "B", "C"]; //"C", "D", "E", "F", "G", "H"];
+
+    thread::spawn(move || {make_publisher::<GetResponse>(&"getresponse message".to_string());});
+    thread::spawn(move || {make_publisher::<GetRequest>(&"getrequest message".to_string());});
+
+    //}
     while true
     {
 
